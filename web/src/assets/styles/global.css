@@ -44,7 +44,8 @@ body {
 body,
 input, 
 button, 
-textarea {
+textarea,
+select {
   font: 500 1.6rem Poppins;
   color: var(--color-text-base);
 }
