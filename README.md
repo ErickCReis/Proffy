@@ -22,7 +22,7 @@ ___
   
   #### :earth_americas: Deploy
 
-  A site está hospedada na plataforma Vercel e pode ser acessada neste [link](https://erickcreis-proffy.vercel.app/).
+  A site está hospedada na plataforma Vercel e pode ser acessada neste [link](https://proffy-p1brawzko.vercel.app).
 
   #### :construction_worker: Como rodar localmente
 
@@ -137,7 +137,7 @@ ___
 
 ## :bug: Problemas
 
-Fique a vontade **para criar uma nova issue** com o respectivo titulo e descrição na página de issues do [Proffy](https://github.com/ErickCReis/Proffy/issues) Repositorio. Se você já encontrou a solução para o problema, **Eu amaria fazer o review do seu pull request**!
+Fique a vontade **para criar uma nova issue** com o respectivo titulo e descrição na página de issues do [Proffy](https://github.com/ErickCReis/Proffy/issues). Se você já encontrou a solução para o problema, **Eu amaria fazer o review do seu pull request**!
 
 ## :tada: Contribuindo
 
