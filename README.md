@@ -22,7 +22,7 @@ ___
   
   #### :earth_americas: Deploy
 
-  A site está hospedada na plataforma Vercel e pode ser acessada neste [link](https://proffy-p1brawzko.vercel.app).
+  A site está hospedada na plataforma [Vercel](https://vercel.com/) e pode ser acessada neste [link](https://proffy-p1brawzko.vercel.app).
 
   #### :construction_worker: Como rodar localmente
 
@@ -46,6 +46,29 @@ ___
   <img src="./.github/assets/mobile-v1.gif" />
 </div>
 
+<details>
+  <summary>Mais detalhes</summary>
+  
+  #### :card_file_box: App Android
+
+  É possivel baixar a apk para Android neste [link](https://github.com/ErickCReis/Proffy/releases/download/v1.0/proffy-v1.apk).
+
+  #### :construction_worker: Como rodar localmente
+
+  ```bash
+  # Vá para a pasta mobile
+  $ cd Proffy/mobile
+
+  # Instale as depedencias
+  $ yarn install
+
+  # Rode a aplicação
+  $ yarn start
+  ```
+  
+  Depois disso basta baixar o Expo ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) ou [IOS](https://apps.apple.com/br/app/expo-client/id982107779)) e ler o QRCode gerado.
+
+</details> 
 
 ## 📦 API
 
@@ -54,7 +77,7 @@ ___
   
   #### :earth_americas: Deploy
 
-  A api está hospedada na plataforma Heroku e pode ser acessada neste [link](https://erickcreis-proffy.herokuapp.com/).
+  A api está hospedada na plataforma [Heroku](https://heroku.com) e pode ser acessada neste [link](https://erickcreis-proffy.herokuapp.com/).
 
   #### :construction_worker: Como rodar localmente
 
@@ -122,7 +145,7 @@ ___
 
   `BASE_URL/connections`
 
-  **Descrição**
+  **Descrição**\
   Retorna o número de conexões entre alunos e proffys realizados pela plataforma
 
 
@@ -130,7 +153,7 @@ ___
 
   `BASE_URL/connections`
 
-  **Descrição**
+  **Descrição**\
   Adiciona uma nova conexão ao total de conexões
 
 </details> 
