@@ -1,28 +1,139 @@
+<div align="center">
+  <img src="./.github/assets/banner.png" />
+
+  <img src="https://img.shields.io/badge/Proffy-NLW 2.0-774FD1?style=for-the-badge">
+
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-774FD1?style=for-the-badge">
+
+  > :rocket: Projeto feito para conectar professores e estudantes, feito na Next Level Week #2 @Rocketseat
+
+</div>
+
+___
+
 ## 💻 Web
 
 <div align="center">
-  <img src="./.github/assets/web.gif" />
+  <img src="./.github/assets/web-v1.gif" />
 </div>
 
-<div align="center">
-  <a href="./web/README.md">Mais detalhes</a>
-</div>
+<details>
+  <summary>Mais detalhes</summary>
+  
+  #### :earth_americas: Deploy
+
+  A site está hospedada na plataforma Vercel e pode ser acessada neste [link](https://erickcreis-proffy.vercel.app/).
+
+  #### :construction_worker: Como rodar localmente
+
+  ```bash
+  # Vá para a pasta web
+  $ cd Proffy/web
+
+  # Instale as depedencias
+  $ yarn install
+
+  # Rode a aplicação
+  $ yarn start
+  ```
+  Acesse: http://localhost:3000/
+
+</details> 
 
 ## 📱 Mobile
 
 <div align="center">
-  <img src="./.github/assets/mobile.gif" />
+  <img src="./.github/assets/mobile-v1.gif" />
 </div>
 
-<div align="center">
-  <a href="./mobile/README.md">Mais detalhes</a>
-</div>
 
 ## 📦 API
 
-<div align="center">
-  <a href="./server/README.md">Mais detalhes</a>
-</div>
+<details>
+  <summary>Mais detalhes</summary>
+  
+  #### :earth_americas: Deploy
+
+  A api está hospedada na plataforma Heroku e pode ser acessada neste [link](https://erickcreis-proffy.herokuapp.com/).
+
+  #### :construction_worker: Como rodar localmente
+
+  ```bash
+  # Vá para a pasta do servidor
+  $ cd Proffy/server
+
+  # Instale as depedencias
+  $ yarn install
+
+  # Rode a aplicação
+  $ yarn start
+  ```
+  Acesse em: http://localhost:3333/
+
+  #### Documentação
+
+  1. **[Aulas](#1-aulas)**\
+  [Listar aulas](#get-listar-aulas)\
+  [Criar aula](#post-criar-aula)
+  2. **[Conexões](#2-conexões)**\
+  [Mostrar total](#get-mostrar-total-de-conexões-realizadas)\
+  [Criar conexão](#post-criar-nova-conexão)
+
+  ### 1. Aulas
+
+  #### [GET] Listar aulas
+
+  `BASE_URL/classes`
+
+  **Descrição**\
+  Busca por porffy que tem aulas compatíveis com os filtros enviados.
+
+  Filtrar por matéria, dia da semana e horários;
+
+  #### [POST] Criar aula
+
+  `BASE_URL/classes`
+
+  **Descrição**\
+  Cria uma nova aula de acordo com os parâmetro enviados.
+
+  **Parâmetros**
+
+  ```bash
+  {
+    "avatar": String,
+    "whatsapp": String,
+    "bio": String,
+    "subject": String,
+    "cost": Integer,
+    "schedule": [
+      {
+        "week_day": Integer,
+        "from": String,
+        "to": String
+      }
+    ]
+  }
+  ```
+
+  ### 2. Conexões
+
+  #### [GET] Mostrar total de conexões realizadas
+
+  `BASE_URL/connections`
+
+  **Descrição**
+  Retorna o número de conexões entre alunos e proffys realizados pela plataforma
+
+
+  #### [POST] Criar nova conexão
+
+  `BASE_URL/connections`
+
+  **Descrição**
+  Adiciona uma nova conexão ao total de conexões
+
+</details> 
 
 ## :bug: Problemas
 
