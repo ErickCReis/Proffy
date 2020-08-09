@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, TextInput } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-community/async-storage';
+import {Picker} from '@react-native-community/picker';
 
 import api from '../../services/api';
 
@@ -21,6 +22,31 @@ function TeacherList() {
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
 
+  const subjectOptions = [
+    '',
+    'Artes',
+    'Biologia',
+    'Ciências',
+    'Educação Física',
+    'Física',
+    'Geografia',
+    'História',
+    'Matemática',
+    'Português',
+    'Química'
+  ]
+
+  const weekDaysOptions = [
+    { value: '', label: '' },
+    { value: '0', label: 'Domingo' },
+    { value: '1', label: 'Segunda-feira' },
+    { value: '2', label: 'Terça-feira' },
+    { value: '3', label: 'Quarta-feira' },
+    { value: '4', label: 'Quita-feira' },
+    { value: '5', label: 'Sexta-feira' },
+    { value: '6', label: 'Sábado' },
+  ]
+
   function loadFavorites() {
     AsyncStorage.getItem('favorites').then(response => {
       if (response) {
@@ -30,6 +56,10 @@ function TeacherList() {
       }
     });
   }
+
+  useEffect(() => {
+    handleFilterSubmit();
+  }, [])
 
   useFocusEffect(() => {
     loadFavorites();
@@ -71,24 +101,30 @@ function TeacherList() {
         { isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matéria</Text>
-            <TextInput
+            <Picker
+              selectedValue={subject}
               style={styles.input}
-              value={subject}
-              onChangeText={text => setSubject(text)}
-              placeholder="Qual a matéria?"
-              placeholderTextColor="#c1bccc"
-            />
+              onValueChange={(itemValue, itemIndex) =>
+                setSubject(itemValue.toString())
+              }>
+              {subjectOptions.map(option => 
+                <Picker.Item label={option} value={option} />
+              )}
+            </Picker>
 
             <View style={styles.inputGroup}>
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Dia da semana</Text>
-                <TextInput
+                <Picker
+                  selectedValue={week_day}
                   style={styles.input}
-                  value={week_day}
-                  onChangeText={text => setWeekDay(text)}
-                  placeholder="Qual o dia?"
-                  placeholderTextColor="#c1bccc"
-                />
+                  onValueChange={(itemValue, itemIndex) =>
+                    setWeekDay(itemValue.toString())
+                  }>
+                  {weekDaysOptions.map(option => 
+                    <Picker.Item label={option.label} value={option.value} />
+                  )}
+                </Picker>
               </View>
 
               <View style={styles.inputBlock}>
