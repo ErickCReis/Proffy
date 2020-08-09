@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
@@ -15,8 +15,18 @@ function TeacherList() {
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
 
-  async function searchTeachers(event: FormEvent) {
-    event.preventDefault();
+  useEffect(() => {
+    searchTeachers();
+  }, [])
+
+  function clearFilters(event: FormEvent) {
+    setSubject('');
+    setWeekDay('');
+    setTime('');
+  }
+
+  async function searchTeachers(event: FormEvent | null = null) {
+    if (event) event.preventDefault();
 
     const response = await api.get('classes', {
       params: {
@@ -76,7 +86,14 @@ function TeacherList() {
             onChange={(event) => { setTime(event.target.value)}} 
           />
 
-          <button type="submit"> Buscar </button>
+          <button type="submit" className="search-button"> Buscar </button>
+          <button 
+            type="submit" 
+            onClick={(event) => clearFilters(event)}
+            className="clear-button"
+          > 
+            Limpar 
+          </button>
 
         </form>
       </PageHeader>

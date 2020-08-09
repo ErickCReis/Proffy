@@ -1,8 +1,7 @@
-import { Request, Response} from 'express';
+import { Request, Response, NextFunction} from 'express';
 
 import db from '../database/connection';
 import convertHourToMinutes from '../utils/convertHourToMinutes';
-
 interface ScheduleItem {
   week_day: number,
   from: string,
@@ -10,38 +9,65 @@ interface ScheduleItem {
 }
 
 export default class ClassesController {
-  async index (request: Request, response: Response) {
-    const filters = request.query;
-
+  async index (request: Request, response: Response, next: NextFunction) {
+    const filters = request.query 
+    
     const subject = filters.subject as string;
     const week_day = filters.week_day as string;
     const time = filters.time as string;
+    
+    //const page = filters.page as unknown as number || 1;
+    //const allClasses = db('classes')
+      // .limit(5)
+      // .offset((page - 1) * 5);
 
-    if (!filters.week_day || !filters.subject || !filters.time) {
-      return response.status(400).json({
-        error: 'Missing filters to search classes'
-      })
+    try {
+      const query = db('classes')
+
+      if (subject) {
+        query
+          .where('classes.subject', '=', subject)
+      }
+      
+      if (week_day) {
+        query
+        .whereExists(function() {
+          this.select('class_schedule.*')
+            .from('class_schedule')
+            .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
+            .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
+        })
+      }
+      
+      if (time) {
+        const timeInMinutes = convertHourToMinutes(time);
+
+        query
+        .whereExists(function() {
+          this.select('class_schedule.*')
+            .from('class_schedule')
+            .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
+            .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
+            .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
+        })
+      }
+
+      query
+        .join('users', 'classes.user_id', '=', 'users.id');
+
+      
+      const allClasses = await query;
+      const count = allClasses.length.toString(); 
+      response.header('X-Total-Count', count);
+      
+      return response.json(allClasses);
+
+    } catch (error) {
+      next(error);
     }
-
-    const timeInMinutes = convertHourToMinutes(time);
-
-    const classes = await db('classes')
-      .whereExists(function() {
-        this.select('class_schedule.*')
-          .from('class_schedule')
-          .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
-          .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
-          .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
-          .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
-      })
-      .where('classes.subject', '=', subject)
-      .join('users', 'classes.user_id', '=', 'users.id')
-      .select(['classes.*', 'users.*']);
-
-    return response.json(classes);
   }
 
-  async create (request: Request, response: Response) {
+  async create (request: Request, response: Response, next: NextFunction) {
     const {
       name,
       avatar,
@@ -88,13 +114,7 @@ export default class ClassesController {
       return response.status(201).send();
     } catch (err) {
       await trx.rollback();
-
-      console.log(err);
-  
-      return response.status(400).json({
-        error: 'Unespected error while creating new class'
-      })
+      next(err);
     }
-  
   }
 }
